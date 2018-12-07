@@ -6,20 +6,27 @@
 
 
 <form action="/signup" method="post">
-    <label>
-        Username 
-        <input type="text" name="username" /><br>
-        Password
-        <input type="password" name="pword"/><br>
-        Verify Password
-        <input type="password" name="verify_pword"/><br>
-        Emails (optional)
-        <input type="text" name="email"/><br>
-    </label>
+
+    <table>
+        {%for field_name, field_type in field_list%}
+        <tr>
+            <td>{field_name}</td>
+            <td><input type={field_type} name={field_name}</td> 
+                <!-- #Username <input type="text" name="username" /><br>
+                #Password
+                #<input type="password" name="pword" /><br>
+                #Verify Password
+                #<input type="password" name="verify_pword" /><br>
+                #Emails (optional)
+                #<input type="text" name="email" /><br>
+                -->
+        </tr>
+        {%endfor%}
+    </table>table>
     <input type="submit" value="Validate" />
 </form>
 
 {% if error %}
-    <p class='error'>{{ error }}</p>
+<p class='error'>{{ error }}</p>
 {% endif %}
 {% endblock %}

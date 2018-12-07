@@ -1,16 +1,20 @@
 from flask import Flask, request, redirect, render_template
 import cgi
+import os
+import jinja2
 
+template_dir = os.path.join(os.path.dirname(__file__), 'templates')
+jinja_env = jinja2.Environment(loader = jinja2.FileSystemLoader(template_dir), autoescape=True)
 app = Flask(__name__)
 
 app.config['DEBUG'] = True      # displays runtime errors in the browser, too
 
-field_dict = [
+field_dict = {
     "Username":"text", 
-    "Password": "password"
+    "Password": "password",
     "Verify Password": "password",
     "Email (optional)":"text"
-]
+}
 
 @app.route("/signup", methods=['POST'])
 def validate_signup():
@@ -48,6 +52,6 @@ def validate_signup():
 @app.route("/")
 def index():
     encoded_error = request.args.get("error")
-    return render_template('signup.html', error=encoded_error and cgi.escape(encoded_error, quote=True))
+    return render_template('signup.html', field_list=field_dict, error=encoded_error and cgi.escape(encoded_error, quote=True))
 
 app.run()
