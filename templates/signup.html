@@ -2,16 +2,23 @@
 
 {% block content %}
 
-<h2>Signup</h2>
+<h2>FLick List Signup Page</h2>
 
 
 <form action="/signup" method="post">
-
+    <label>
     <table>
-        {%for field_name, field_type in field_list%}
+        <tr><td style="width:30px"></td><th span colspan="2" style="width:auto;background-color:gold">Enter Your Information</th><tr></tr>
+
+        {%for EachField in input_fields%}
         <tr>
-            <td>{field_name}</td>
-            <td><input type={field_type} name={field_name}</td> 
+            <td > </td>
+            <td style="width:200px">{{EachField[0]}}</td>
+            <td style="width:auto"><input type={{EachField[2]}} name={{EachField[1]}}></td> 
+            <td style="width:auto; color:red">ErrorPrompt</td>
+        </tr>
+    
+        {%endfor%}
                 <!-- #Username <input type="text" name="username" /><br>
                 #Password
                 #<input type="password" name="pword" /><br>
@@ -19,10 +26,11 @@
                 #<input type="password" name="verify_pword" /><br>
                 #Emails (optional)
                 #<input type="text" name="email" /><br>
-                -->
-        </tr>
-        {%endfor%}
-    </table>table>
+                    -->
+                       
+    </table>
+    </label>
+    <br>
     <input type="submit" value="Validate" />
 </form>
 

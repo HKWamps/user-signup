@@ -9,20 +9,15 @@ app = Flask(__name__)
 
 app.config['DEBUG'] = True      # displays runtime errors in the browser, too
 
-field_dict = {
-    "Username":"text", 
-    "Password": "password",
-    "Verify Password": "password",
-    "Email (optional)":"text"
-}
+input_fields = [("Username:", "username", "text") , ("Password:", "password", "password"),("Verify Password:", "verify_pwd", "password"), ("Email (optional):","user_email", "text")]
 
 @app.route("/signup", methods=['POST'])
 def validate_signup():
     # look inside the request to figure out what the user typed
     input_username = request.form['username']
-    input_pword = request.form['pword']
-    input_verify = request.form["verify_pword"]
-    input_email = request.form("email")
+    input_pword = request.form['password']
+    input_verify = request.form["verify_pwd"]
+    input_email = request.form("user_email")
     
     # if the user typed nothing at all, redirect and tell them the error
     if (not input_username) or (input_username.strip() == ""):
@@ -52,6 +47,6 @@ def validate_signup():
 @app.route("/")
 def index():
     encoded_error = request.args.get("error")
-    return render_template('signup.html', field_list=field_dict, error=encoded_error and cgi.escape(encoded_error, quote=True))
+    return render_template('signup.html', input_fields=input_fields, error=encoded_error and cgi.escape(encoded_error, quote=True))
 
 app.run()
